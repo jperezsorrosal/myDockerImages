@@ -1,4 +1,4 @@
-FROM java8
+FROM jperezsl/ubuntu-java8
 
 ENV DEBIAN_FRONTEND noninteractive
 ENV SCALA_VERSION 2.11
@@ -11,6 +11,8 @@ ENV KAFKA_PACKAGE kafka_"$SCALA_VERSION"-"$KAFKA_VERSION".tgz
 
 RUN apt-get update && apt-get install -y supervisor
 RUN mkdir -p /var/log/supervisor
+
+# supervisor config
 
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
@@ -27,7 +29,12 @@ RUN apt-get update && \
 
 RUN mkdir -p /var/lib/zookeeper
 
+ADD scripts/start-kafka.sh /usr/bin/start-kafka.sh
+
 EXPOSE 2181 9092
 
-CMD ["/usr/bin/supervisord"]
+# CMD ["/usr/bin/supervisord"]
 
+COPY scripts/init.sh /usr/sbin/init.sh
+
+CMD ["/usr/sbin/init.sh"]

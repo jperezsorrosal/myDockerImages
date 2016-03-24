@@ -1,0 +1,11 @@
+---
+- name: My Zookeper/Kafka container
+  docker:
+    name: myKafka
+    image: jperezsl/kafka-container
+    state: reloaded
+    ports:
+    - "2181:2181"
+    - "9092:9092"
+    env:
+        ZOOKIPS: 192.168.33.10

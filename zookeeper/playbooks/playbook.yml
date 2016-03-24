@@ -1,0 +1,8 @@
+---
+- hosts: all
+  vars:
+
+  become: yes
+  roles:
+    - docker-server
+    - kafka-container
